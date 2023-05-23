@@ -12,7 +12,7 @@ from dataclasses import dataclass
 from datetime import datetime
 from loguru import logger
 from typing import List, Callable
-from czsc.enum import Mark, Direction, Freq, Operate
+from czsc.enumtest import Mark, Direction, Freq, Operate
 from czsc.utils.corr import single_linear
 
 

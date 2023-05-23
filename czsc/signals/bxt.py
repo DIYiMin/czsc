@@ -10,7 +10,7 @@ from collections import OrderedDict
 from deprecated import deprecated
 from czsc import analyze
 from czsc.objects import Direction, BI, FakeBI, Signal
-from czsc.enum import Freq
+from czsc.enumtest import Freq
 from czsc.utils.ta import RSQ
 
 

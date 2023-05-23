@@ -74,6 +74,8 @@ class TushareProApi:
 
 try:
     from tushare.util import upass
+
+    upass.set_token("2cdf1f20e096073ff4ad6fb1dda9e7e11f948b78c547250c941a25d2")
     pro = TushareProApi(upass.get_token(), timeout=60)
 except:
     print("Tushare Pro 初始化失败")
