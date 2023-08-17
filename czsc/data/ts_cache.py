@@ -247,7 +247,7 @@ class TsDataCache:
             delta = timedelta(days=20*int(freq.replace("min", "")))
             dt2 = dt1 + delta
             while dt1 < end_dt:
-                df = ts.pro_bar(ts_code=ts_code, asset=asset, freq=freq,
+                df = ts.pro_bar(ts_code=ts_code, asset=asset,
                                 start_date=dt1.strftime(dt_fmt), end_date=dt2.strftime(dt_fmt))
                 klines.append(df)
                 dt1 = dt2
@@ -256,16 +256,16 @@ class TsDataCache:
                     print(f"pro_bar_minutes: {ts_code} - {asset} - {freq} - {dt1} - {dt2} - {len(df)}")
 
             df_klines = pd.concat(klines, ignore_index=True)
-            kline = df_klines.drop_duplicates('trade_time')\
-                .sort_values('trade_time', ascending=True, ignore_index=True)
-            kline['trade_time'] = pd.to_datetime(kline['trade_time'], format=dt_fmt)
-            kline['dt'] = kline['trade_time']
+            kline = df_klines.drop_duplicates('trade_date')\
+                .sort_values('trade_date', ascending=True, ignore_index=True)
+            kline['trade_date'] = pd.to_datetime(kline['trade_date'], format=dt_fmt)
+            kline['dt'] = kline['trade_date']
             float_cols = ['open', 'close', 'high', 'low', 'vol', 'amount']
             kline[float_cols] = kline[float_cols].astype('float32')
             kline['avg_price'] = kline['amount'] / kline['vol']
 
             # 删除9:30的K线
-            kline['keep'] = kline['trade_time'].apply(lambda x: 0 if x.hour == 9 and x.minute == 30 else 1)
+            kline['keep'] = kline['trade_date'].apply(lambda x: 0 if x.hour == 9 and x.minute == 30 else 1)
             kline = kline[kline['keep'] == 1]
             # 删除没有成交量的K线
             kline = kline[kline['vol'] > 0]
@@ -273,9 +273,9 @@ class TsDataCache:
 
             start_date = pd.to_datetime(self.sdt)
             end_date = pd.to_datetime(self.edt)
-            kline = kline[(kline['trade_time'] >= start_date) & (kline['trade_time'] <= end_date)]
+            kline = kline[(kline['trade_date'] >= start_date) & (kline['trade_date'] <= end_date)]
             kline = kline.reset_index(drop=True)
-            kline['trade_date'] = kline.trade_time.apply(lambda x: x.strftime(date_fmt))
+            kline['trade_date'] = kline.trade_date.apply(lambda x: x.strftime(date_fmt))
 
             if asset == 'E':
                 # https://tushare.pro/document/2?doc_id=28
@@ -312,10 +312,10 @@ class TsDataCache:
             update_bars_return(kline)
             kline.to_feather(file_cache)
 
-        if sdt:
-            kline = kline[kline['trade_time'] >= pd.to_datetime(sdt)]
-        if edt:
-            kline = kline[kline['trade_time'] <= pd.to_datetime(edt)]
+        # if sdt:
+        #     kline = kline[kline['trade_date'] >= pd.to_datetime(sdt)]
+        # if edt:
+        #     kline = kline[kline['trade_date'] <= pd.to_datetime(edt)]
 
         bars = kline.reset_index(drop=True)
         if raw_bar:

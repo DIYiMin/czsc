@@ -86,7 +86,7 @@ def check():
     from czsc.traders.base import check_signals_acc
 
     symbols = research.get_symbols('A股主要指数')
-    bars = research.get_raw_bars(symbols[0], '15分钟', '20181101', '20210101', fq='前复权')
+    bars = research.get_raw_bars(symbols[0], '日线', '20211101', '20230730', fq='前复权')
 
     signals_config = [{'name': tas_double_ma_V230511, 'freq': '日线', 'di': 2}]
     check_signals_acc(bars, signals_config=signals_config, height='780px')

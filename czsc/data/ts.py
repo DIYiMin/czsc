@@ -24,7 +24,8 @@ freq_map = {Freq.F1: "1min", Freq.F5: '5min', Freq.F15: "15min", Freq.F30: '30mi
             Freq.F60: "60min", Freq.D: 'D', Freq.W: "W", Freq.M: "M"}
 freq_cn_map = {"1分钟": Freq.F1, "5分钟": Freq.F5, "15分钟": Freq.F15, "30分钟": Freq.F30,
                "60分钟": Freq.F60, "日线": Freq.D}
-dt_fmt = "%Y-%m-%d %H:%M:%S"
+dt_fmt_bak = "%Y-%m-%d %H:%M:%S"
+dt_fmt = "%Y-%m-%d %H:%M"
 date_fmt = "%Y%m%d"
 
 
@@ -75,7 +76,7 @@ class TushareProApi:
 try:
     from tushare.util import upass
 
-    upass.set_token("2cdf1f20e096073ff4ad6fb1dda9e7e11f948b78c547250c941a25d2")
+    upass.set_token("0eba9ee1b8e99cc21a50189f614eb617fb2fa2e1a898d5e69cf4594f")
     pro = TushareProApi(upass.get_token(), timeout=60)
 except:
     print("Tushare Pro 初始化失败")

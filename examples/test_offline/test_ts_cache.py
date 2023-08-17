@@ -36,7 +36,7 @@ def test_ts_cache_ths_daily():
 
 def test_ts_cache_daily_basic_new():
     dc = TsDataCache(data_path=data_path, sdt='20200101', edt='20211024')
-    df = dc.daily_basic_new(trade_date='2018-03-15')
+    df = dc.daily_basic_new(trade_date='2023-06-07')
     assert df.shape[0] == 3237 and df.shape[1] == 37
 
     dfb = dc.stocks_daily_basic_new(sdt='20211001', edt='20211020')
